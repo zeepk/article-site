@@ -1,53 +1,37 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import "./styles/Article.css";
 
 class Article extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			data: [
-				{
-					title: 'placeholder',
-					created_at: null,
-					message: 'placeholder'
-				}
-			]
-		};
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: "placeholder",
+      created_at: null,
+      message: "placeholder"
+    };
+  }
 
-	render() {
-		let article_info = [
-			{
-				title: 'placeholder'
-			}
-		];
-		fetch('http://localhost:8000/api/articles.json')
-			.then(response => {
-				return response.json();
-			})
-			.then(myJson => {
-				article_info = myJson;
-				this.setState({
-					data: myJson
-				});
-			});
+  render() {
+    // this.setState({
+    //   title: this.props.title,
+    //   created_at: this.props.created_at,
+    //   message: this.props.message
+    // });
+    const dateTime =
+      this.props.content.created_at.substring(5, 7) +
+      "-" +
+      this.props.content.created_at.substring(8, 10) +
+      "-" +
+      this.props.content.created_at.substring(0, 4);
 
-		// if (article_info.length > 0) {
-		// } else {
-		// 	article_info = [
-		// 		{
-		// 			title: 'placeholder'
-		// 		}
-		// 	];
-		// }
-
-		return (
-			<div>
-				<h3>{this.state.data[0].title}</h3>
-				<p>{this.state.data[0].created_at}</p>
-				<p>{this.state.data[0].message}</p>
-			</div>
-		);
-	}
+    return (
+      <div className="articleContainer">
+        <h3>{this.props.content.title}</h3>
+        <p>{dateTime}</p>
+        <p>{this.props.content.message}</p>
+      </div>
+    );
+  }
 }
 
 export default Article;
